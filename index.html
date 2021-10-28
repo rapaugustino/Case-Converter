@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="title">Case Converter</div>
+<textarea></textarea>
+
+<div id = "button-container">
+    <button class="btn" id="upper-case"> Upper Case </button>
+    <button class="btn" id="lower-case"> Lower Case </button>
+    <button class="btn" id="proper-case"> Proper Case </button>
+    <button class="btn" id="sentence-case"> Sentence Case</button>
+    <button class="btn" id="save-text-file">Save Text File</button>
+</div>
+
+<script>
+    document.getElementById("upper-case").addEventListener("click", function(){
+        let text = document.querySelector("textarea").value;
+        return document.querySelector("textarea").value = text.toUpperCase();
+    });
+
+    document.getElementById("lower-case").addEventListener("click", function(){
+        let text = document.querySelector("textarea").value;
+        return document.querySelector("textarea").value = text.toLowerCase();
+    });
+
+    document.getElementById("proper-case").addEventListener("click", function(){
+        let text = document.querySelector("textarea").value;
+        return document.querySelector("textarea").value = text.toLowerCase().split(" ")
+        .map(function (text) {
+            return text.charAt(0).toUpperCase() + text.slice(1);}).join(" ");
+    });
+
+    document.getElementById("sentence-case").addEventListener("click", function(){
+        let text = document.querySelector("textarea").value;
+        return document.querySelector("textarea").value = text.toLowerCase().split(". ")
+            .map(function (text) {
+                return text.charAt(0).toUpperCase() + text.slice(1);}).join(". ");
+
+    });
+
+    function download(filename, text) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    
+    document.getElementById("save-text-file").addEventListener("click", function(){
+        let text = document.querySelector("textarea").value;
+        return download("text.txt",text);
+    });
+</script>
+
+
+</body>
+</html>
